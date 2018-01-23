@@ -1,0 +1,38 @@
+{
+  "authors": [
+    {
+      "id": 0,
+      "name": "CosasDePuma",
+      "repos": [
+        0
+      ]
+    }
+  ],
+  "repos": [
+    {
+      "id": 0,
+      "name": "Bobobot",
+      "author": "CosasDePuma",
+      "description": "Personal Telegram Hacking Bot",
+      "language": "python",
+      "main-script": "bobo.py",
+      "install": [
+        {
+          "Linux": [
+            "pip install -r requirements.txt",
+            "INPUT Enter your Telegram Botmaster Token: ",
+            "OUTPUT sed -i 's/000000000:AAAaaaaaa0AaAAaaaA0aaAAAaAaaAaaAAA/<OUTPUT>/g' bobo.cfg",
+            "INPUT Enter your Telegram UserID Token: ",
+            "OUTPUT sed -i 's/000000000/<OUTPUT>/g' bobo.cfg",
+            "chmod +x bobo.py"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    }
+  ]
+}
