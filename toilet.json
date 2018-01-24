@@ -6,6 +6,11 @@
       "repos": [
         0
       ]
+    },
+    {
+      "id": 1,
+      "name": "SqlmapProject",
+      "repos": [ 2 ]
     }
   ],
   "repos": [
@@ -14,7 +19,7 @@
       "name": "Bobobot",
       "author": "CosasDePuma",
       "description": "Personal Telegram Hacking Bot",
-      "language": "python",
+      "language": [ "python2" ],
       "main-script": "bobo.py",
       "install": [
         {
@@ -26,6 +31,51 @@
             "OUTPUT sed -i 's/000000000/<OUTPUT>/g' bobo.cfg",
             "chmod +x bobo.py"
           ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "One-Lin3r",
+      "author": "D4Vinci",
+      "description": "Gives you one-liners that aids in penetration testing operations",
+      "language": [ "python3", "python2" ],
+      "main-script": "start.sh",
+      "install": [
+        {
+          "Linux": [
+            "chmod 755 -R ../One-Lin3r/",
+            "apt-get install --force-yes --yes libncurses5-dev",
+            "pip install -r requirements.txt",
+            "echo \"#! /bin/bash\" > start.sh",
+            "echo \"pushd $PWD\" >> start.sh",
+            "echo \"python One_Lin3r.py $@\" >> start.sh",
+            "echo \"popd > /dev/null\" >> start.sh",
+            "chmod +x start.sh"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "SQLMap",
+      "author": "SqlmapProject",
+      "description": "Automatic SQL injection and database takeover tool http://sqlmap.org",
+      "language": [ "python2" ],
+      "main-script": "sqlmap.py",
+      "install": [
+        {
+          "Linux": [ ]
         }
       ],
       "uninstall": [

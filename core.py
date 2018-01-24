@@ -112,12 +112,20 @@ class Core:
                                 stderr=FNULL,
                                 shell=False)
                             # ----------
+                            #  Get real user name
+                            # ----------------
+                            real_user = str()
+                            if 'SUDO_USER' in os.environ:
+                                real_user = os.environ['SUDO_USER']
+                            else:
+                                real_user = os.environ['USER']
+                            # ----------
                             #  Change folder owner
                             # ----------------
                             print("{}{}[*] Changing program owner{}".format(
                                 color.BOLD, color.OKBLUE, color.ENDC))
-                            chownR = "chown -R {} /opt/{}".format(
-                                str(os.getuid()), str(repository['name']))
+                            chownR = "chown -R {} \"/opt/{}\"".format(
+                                real_user, str(repository['name']))
                             subprocess.call(shlex.split(chownR))
                             os.chdir("/opt/{}".format(str(repository['name'])))
                             # ----------
@@ -127,8 +135,8 @@ class Core:
                                 color.BOLD, color.OKBLUE, color.ENDC))
                             VARIABLE = int()
                             for cmd in repository['install'][0][__os]:
-                                lcmd = shlex.split(cmd)
                                 try:
+                                    lcmd = shlex.split(cmd)
                                     # ----------
                                     #  Custom Command: INPUT
                                     # ----------------
@@ -147,6 +155,16 @@ class Core:
                                         subprocess.call(
                                             lcmd, stdout=FNULL, shell=False)
                                     # ----------
+                                    #  shell Command: echo
+                                    # ----------------
+                                    elif "echo" in cmd:
+                                        '''
+                                     !!!!!!!!!!!!!!!!!!!!
+                                     !! DANGEROUS CODE !!
+                                     !!!!!!!!!!!!!!!!!!!!
+                                        '''
+                                        os.system(cmd)
+                                    # ----------
                                     #  Execute other commands
                                     # ----------------
                                     else:
@@ -155,8 +173,8 @@ class Core:
                                             stdout=FNULL,
                                             stderr=FNULL,
                                             shell=False)
-                                except OSError:
-                                    print(lcmd)
+                                except Exception as e:
+                                    print(e)
                             # ----------
                             #  Create a Syslink
                             # ----------------
@@ -188,9 +206,9 @@ class Core:
                                     except subprocess.CalledProcessError:
                                         print("{}{}[!] Error: ".format(
                                             color.BOLD, color.FAIL) +
-                                            "Please, delete or rename " +
-                                            "/usr/bin/{}".format(
-                                            repository['name'].lower()))
+                                              "Please, delete or rename " +
+                                              "/usr/bin/{}".format(
+                                                  repository['name'].lower()))
                         # ----------
                         #  Installation confirmation
                         # ----------------
@@ -208,8 +226,7 @@ class Core:
         # ----------------
         if not found:
             print("{}[!] Repository {} not found in the db. Try {} search {}".
-                  format(color.FAIL, __query,
-                         argv[0], __query))
+                  format(color.FAIL, __query, argv[0], __query))
 
     # ----------
     #  Repository Uninstallation
