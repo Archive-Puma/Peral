@@ -60,8 +60,7 @@
             "INIT #! /bin/bash",
             "INIT pushd <PWD> > /dev/null",
             "INIT python One_Lin3r.py $@",
-            "INIT popd > /dev/null",
-            "chmod +x start.sh"
+            "INIT popd > /dev/null"
           ]
         }
       ],
