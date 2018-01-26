@@ -12,6 +12,7 @@ from __future__ import print_function
 import os
 import json
 import shlex
+import hashlib
 import platform
 import subprocess
 
@@ -20,6 +21,11 @@ import subprocess
 # ----------------
 from sys import argv
 from builtins import input
+
+# ----------
+#  Variables
+# ----------------
+db_name = "octopus_db.json"
 
 
 # ----------
@@ -49,7 +55,7 @@ class Core:
     # ----------
     #  Repository Installation
     # ----------------
-    def install(self, __db, __query, __os):
+    def install(self, __db, __query, __os, __args):
         found = False
         # ----------
         #  Search in the Database
@@ -73,25 +79,29 @@ class Core:
                     # ----------
                     #  Print Setup Commands
                     # ----------------
-                    print(color.BOLD + color.OKBLUE + "\n[*] SETUP COMMANDS:")
-                    print("----------------------------------------------" +
-                          color.ENDC)
-                    print(color.WARNING + "git clone {}".format(gitlink) +
-                          color.ENDC)
-                    for cmd in repository['install'][0][__os]:
-                        print(color.WARNING + cmd + color.ENDC)
-                    print(
-                        color.BOLD + color.OKBLUE +
-                        "-----------------------------------------------------"
-                        + color.ENDC)
+                    if not __args.quiet:
+                        print(color.BOLD + color.OKBLUE +
+                              "\n[*] SETUP COMMANDS:")
+                        print("----------------------------------------------"
+                              + color.ENDC)
+                        print(color.WARNING + "git clone {}".format(gitlink) +
+                              color.ENDC)
+                        for cmd in repository['install'][0][__os]:
+                            print(color.WARNING + cmd + color.ENDC)
+                        print(
+                            color.BOLD + color.OKBLUE +
+                            "-----------------------------------------------------"
+                            + color.ENDC)
                     # ----------
                     #  Confirm Setup Commands
                     # ----------------
-                    confirm_install = input(
-                        color.FAIL + color.BOLD +
-                        "\n[!] Are you sure to install {}".format(
-                            repository['name']) +
-                        " executing this commands? [Y/n]: " + color.ENDC)
+                    confirm_install = ''
+                    if not __args.yes:
+                        confirm_install = input(
+                            color.FAIL + color.BOLD +
+                            "\n[!] Are you sure to install {}".format(
+                                repository['name']) +
+                            " executing this commands? [Y/n]: " + color.ENDC)
                     # ----------
                     #  Installation process
                     # ----------------
@@ -103,9 +113,11 @@ class Core:
                             # ----------
                             #  Clone Github Repository
                             # ----------------
-                            print("{}{}\n[*] Cloning repository into /opt/{}{}"
-                                  .format(color.BOLD, color.OKBLUE,
-                                          repository['name'], color.ENDC))
+                            if not __args.quiet:
+                                print(
+                                    "{}{}\n[*] Cloning repository into /opt/{}{}"
+                                    .format(color.BOLD, color.OKBLUE,
+                                            repository['name'], color.ENDC))
                             subprocess.call(
                                 gitclone_f,
                                 stdout=FNULL,
@@ -122,17 +134,37 @@ class Core:
                             # ----------
                             #  Change folder owner
                             # ----------------
-                            print("{}{}[*] Changing program owner{}".format(
-                                color.BOLD, color.OKBLUE, color.ENDC))
+                            if not __args.quiet:
+                                print(
+                                    "{}{}[*] Changing program owner{}".format(
+                                        color.BOLD, color.OKBLUE, color.ENDC))
                             chownR = "chown -R {} \"/opt/{}\"".format(
                                 real_user, str(repository['name']))
                             subprocess.call(shlex.split(chownR))
                             os.chdir("/opt/{}".format(str(repository['name'])))
                             # ----------
+                            #  Clear & Create Init Scripts
+                            # ----------------
+                            try:
+                                if "INIT" in repository['install'][0]:
+                                    subprocess.check_output(
+                                        ["[", "-f", "initperal.sh", "]"])
+                                    subprocess.check_output(
+                                        ["rm", "-f", "initperal.sh"])
+                                    subprocess.check_output(
+                                        ["touch", "initperal.sh"])
+                                    subprocess.check_output(
+                                        ["chown", real_user, "initperal.sh"])
+                                    print
+                            except subprocess.CalledProcessError:
+                                pass
+                            # ----------
                             #  Running post-download commands
                             # ----------------
-                            print("{}{}[*] Running Setup Scripts...{}".format(
-                                color.BOLD, color.OKBLUE, color.ENDC))
+                            if not __args.quiet:
+                                print("{}{}[*] Running Setup Scripts...{}".
+                                      format(color.BOLD, color.OKBLUE,
+                                             color.ENDC))
                             VARIABLE = int()
                             for cmd in repository['install'][0][__os]:
                                 try:
@@ -154,6 +186,16 @@ class Core:
                                         lcmd = shlex.split(cmd)
                                         subprocess.call(
                                             lcmd, stdout=FNULL, shell=False)
+                                    # ----------
+                                    #  Custom Command: INIT
+                                    # ----------------
+                                    elif cmd[:5] == "INIT ":
+                                        with open("initperal.sh",
+                                                  "a") as script:
+                                            cmd = cmd.replace(
+                                                "<PWD>", os.getcwd())
+                                            script.write(
+                                                "{}\n".format(cmd[5:]))
                                     # ----------
                                     #  shell Command: echo
                                     # ----------------
@@ -182,13 +224,16 @@ class Core:
                                 # ----------
                                 #  Ask to the user
                                 # ----------------
-                                syslink_comfirmation = input(
-                                    "{}{}[?] Would you like to create ".format(
-                                        color.BOLD, color.WARNING) +
-                                    "a syslink named {}{}{}{}{}? [Y/n]: {}".
-                                    format(color.UNDERLINE, repository['name']
-                                           .lower(), color.ENDC, color.WARNING,
-                                           color.BOLD, color.ENDC))
+                                syslink_comfirmation = ''
+                                if not __args.yes:
+                                    syslink_comfirmation = input(
+                                        "{}{}[?] Would you like to create ".
+                                        format(color.BOLD, color.WARNING) +
+                                        "a syslink named {}{}{}{}{}? [Y/n]: {}".
+                                        format(
+                                            color.UNDERLINE, repository['name']
+                                            .lower(), color.ENDC, color.
+                                            WARNING, color.BOLD, color.ENDC))
                                 # ----------
                                 #  Try to link the program
                                 # ----------------
@@ -204,17 +249,22 @@ class Core:
                                     #  Catch the exception
                                     # ----------------
                                     except subprocess.CalledProcessError:
-                                        print("{}{}[!] Error: ".format(
-                                            color.BOLD, color.FAIL) +
-                                              "Please, delete or rename " +
-                                              "/usr/bin/{}".format(
-                                                  repository['name'].lower()))
+                                        if not __args.quiet:
+                                            print(
+                                                "{}{}[!] Error: Please, delete".
+                                                format(color.BOLD, color.FAIL)
+                                                + " or rename " +
+                                                "/usr/bin/{}".format(
+                                                    repository['name'].lower())
+                                            )
                         # ----------
                         #  Installation confirmation
                         # ----------------
-                        print("{}{}[*] {} has been successfully installed{}\n".
-                              format(color.BOLD, color.HEADER,
-                                     repository['name'], color.ENDC))
+                        if not __args.quiet:
+                            print(
+                                "{}{}[*] {} has been successfully installed{}\n".
+                                format(color.BOLD, color.HEADER,
+                                       repository['name'], color.ENDC))
                 # ----------
                 #  Unprivileged error
                 # ----------------
@@ -231,7 +281,7 @@ class Core:
     # ----------
     #  Repository Uninstallation
     # ----------------
-    def uninstall(self, __db, __query, __os):
+    def uninstall(self, __db, __query, __os, __args):
         found = False
         for repository in __db['repos']:
             if not found and __query.lower() == repository['name'].lower():
@@ -243,10 +293,13 @@ class Core:
                     # ----------
                     #  Confirm Remove Commands
                     # ----------------
-                    confirm_uninstall = input(
-                        color.FAIL + color.BOLD +
-                        "[!] Are you sure to uninstall {}? [y/N]: {}".format(
-                            repository['name'], color.ENDC))
+                    if __args.yes:
+                        confirm_uninstall = 'y'
+                    else:
+                        confirm_uninstall = input(
+                            color.FAIL + color.BOLD +
+                            "[!] Are you sure to uninstall {}? [y/N]: {}".
+                            format(repository['name'], color.ENDC))
                     if confirm_uninstall.lower() == 'y':
                         # ----------
                         #  Linux desinstaller
@@ -264,19 +317,21 @@ class Core:
                             # ----------
                             #  Desinstallation Process
                             # ----------------
-                            print("{}{}[*] Removing syslinks...{}".format(
-                                color.BOLD, color.WARNING, color.ENDC))
-                            subprocess.call(lremove_lk, shell=False)
-                            print("{}{}[*] Removing repository...{}".format(
-                                color.BOLD, color.WARNING, color.ENDC))
-                            subprocess.call(lremove_repo, shell=False)
+                            if not __args.quiet:
+                                print("{}{}[*] Removing syslinks...{}".format(
+                                    color.BOLD, color.WARNING, color.ENDC))
+                                subprocess.call(lremove_lk, shell=False)
+                                print(
+                                    "{}{}[*] Removing repository...{}".format(
+                                        color.BOLD, color.WARNING, color.ENDC))
+                                subprocess.call(lremove_repo, shell=False)
                         # ----------
                         #  Desinstallation confirmation
                         # ----------------
-                        print("{}{}[*] {} ".format(color.BOLD, color.HEADER,
-                                                   repository['name']) +
-                              "has been successfully uninstalled{}".format(
-                                  color.ENDC))
+                        if not __args.quiet:
+                            print("{}{}[*] {} has been successfully".format(
+                                color.BOLD, color.HEADER, repository['name']) +
+                                  " uninstalled{}".format(color.ENDC))
                 # ----------
                 #  Unprivileged error
                 # ----------------
@@ -319,13 +374,71 @@ class Info:
     # ----------
     #  Variables
     # ----------------
-    __os__ = str()
+    __os = str()
+    __realpath = str()
 
     # ----------
     #  Initialization
     # ----------------
     def __init__(self):
-        self.__os__ = platform.system()
+        self.__os = platform.system()
+        self.__realpath = os.path.dirname(os.path.realpath(__file__))
+
+    # ----------
+    #  System Information
+    # ----------------
+    def getos(self):
+        return self.__os
+
+    def getpath(self):
+        return self.__realpath
+
+
+# ----------
+#  Security Core
+# ----------------
+class Security:
+    security_enabled = False
+
+    # ----------
+    #  Initialization
+    # ----------------
+    def __init__(self, __path):
+        try:
+            # ----------
+            #  Read MD5 file
+            # ----------------
+            hashmd5 = str()
+            with open("{}/md5.sum".format(__path)) as md5sum:
+                # ----------
+                #  Calculate MD5 DB Sum
+                # ----------------
+                with open("{}/{}".format(__path, db_name)) as db:
+                    hashmd5 = hashlib.md5(
+                        db.read().encode('utf-8')).hexdigest()
+                # ----------
+                #  Compare both and check if it is secure
+                # ----------------
+                if md5sum.read().strip() == hashmd5.strip():
+                    self.security_enabled = True
+        # ----------
+        #  Handle errors
+        # ----------------
+        except IOError:
+            pass
+
+    # ----------
+    #  Return security flag
+    # ----------------
+    def is_secure(self):
+        return self.security_enabled
+
+    # ----------
+    #  Security Error Message
+    # ----------------
+    def not_secure(self):
+        print("{}{}[!] Database has been modified!".format(
+            color.BOLD, color.FAIL, color.ENDC))
 
 
 # ----------
@@ -342,13 +455,12 @@ class Reader:
     #  Initialization
     # ----------------
     def __init__(self, __file):
-        self.__file = __file
-        with open(__file, 'r') as open_json:
+        self.__file = "{}/{}".format(__file, db_name)
+        with open(self.__file, 'r') as open_json:
             self.__db = json.load(open_json)
 
     # ----------
     #  Misc. functions
     # ----------------
-
     def getjson(self):
         return self.__db
