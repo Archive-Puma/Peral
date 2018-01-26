@@ -3,14 +3,17 @@
     {
       "id": 0,
       "name": "CosasDePuma",
-      "repos": [
-        0
-      ]
+      "repos": [ 0 ]
     },
     {
       "id": 1,
       "name": "SqlmapProject",
       "repos": [ 2 ]
+    },
+    {
+      "id": 2,
+      "name": "D4Vinci",
+      "repos": [ 1 ]
     }
   ],
   "repos": [
@@ -21,6 +24,7 @@
       "description": "Personal Telegram Hacking Bot",
       "language": [ "python2" ],
       "main-script": "bobo.py",
+      "version": "2.8a",
       "install": [
         {
           "Linux": [
@@ -45,17 +49,18 @@
       "author": "D4Vinci",
       "description": "Gives you one-liners that aids in penetration testing operations",
       "language": [ "python3", "python2" ],
-      "main-script": "start.sh",
+      "main-script": "initperal.sh",
+      "version": "1.0",
       "install": [
         {
           "Linux": [
             "chmod 755 -R ../One-Lin3r/",
             "apt-get install --force-yes --yes libncurses5-dev",
             "pip install -r requirements.txt",
-            "echo \"#! /bin/bash\" > start.sh",
-            "echo \"pushd $PWD\" >> start.sh",
-            "echo \"python One_Lin3r.py $@\" >> start.sh",
-            "echo \"popd > /dev/null\" >> start.sh",
+            "INIT #! /bin/bash",
+            "INIT pushd <PWD> > /dev/null",
+            "INIT python One_Lin3r.py $@",
+            "INIT popd > /dev/null",
             "chmod +x start.sh"
           ]
         }
@@ -73,6 +78,7 @@
       "description": "Automatic SQL injection and database takeover tool http://sqlmap.org",
       "language": [ "python2" ],
       "main-script": "sqlmap.py",
+      "version": "1.2.1.14",
       "install": [
         {
           "Linux": [ ]
