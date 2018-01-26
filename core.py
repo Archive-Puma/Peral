@@ -67,19 +67,26 @@ class Core:
                 #  Check permissions
                 # ----------------
                 if os.geteuid() == 0:
+                    tools_folder = str()
+                    # ----------
+                    #  Peral Tools Installation Folder
+                    # ----------------
+                    if __os == "Linux":
+                        tools_folder = "/opt/peral_tools/"
                     # ----------
                     #  Get Github link
                     # ----------------
                     gitlink = "https://github.com/{}/{}".format(
                         repository['author'], repository['name'])
                     gitclone_f = [
-                        "git", "clone", gitlink, "/opt/{}".format(
-                            repository['name'], ">", "/dev/null")
+                        "git", "clone", gitlink, "{}{}".format(
+                            tools_folder, repository['name'], ">", "/dev/null")
                     ]
                     # ----------
                     #  Print Setup Commands
                     # ----------------
                     if not __args.quiet:
+                        has_init_command = False
                         print(color.BOLD + color.OKBLUE +
                               "\n[*] SETUP COMMANDS:")
                         print("----------------------------------------------"
@@ -87,6 +94,8 @@ class Core:
                         print(color.WARNING + "git clone {}".format(gitlink) +
                               color.ENDC)
                         for cmd in repository['install'][0][__os]:
+                            if "INIT " == cmd[:5]:
+                                has_init_command = True
                             print(color.WARNING + cmd + color.ENDC)
                         print(
                             color.BOLD + color.OKBLUE +
@@ -115,9 +124,10 @@ class Core:
                             # ----------------
                             if not __args.quiet:
                                 print(
-                                    "{}{}\n[*] Cloning repository into /opt/{}{}"
+                                    "{}{}\n[*] Cloning repository into {}{}{}"
                                     .format(color.BOLD, color.OKBLUE,
-                                            repository['name'], color.ENDC))
+                                            tools_folder, repository['name'],
+                                            color.ENDC))
                             subprocess.call(
                                 gitclone_f,
                                 stdout=FNULL,
@@ -138,26 +148,28 @@ class Core:
                                 print(
                                     "{}{}[*] Changing program owner{}".format(
                                         color.BOLD, color.OKBLUE, color.ENDC))
-                            chownR = "chown -R {} \"/opt/{}\"".format(
-                                real_user, str(repository['name']))
+                            chownR = "chown -R {} \"{}{}\"".format(
+                                real_user, tools_folder, repository['name'])
                             subprocess.call(shlex.split(chownR))
-                            os.chdir("/opt/{}".format(str(repository['name'])))
+                            os.chdir("{}{}".format(tools_folder,
+                                                   repository['name']))
                             # ----------
                             #  Clear & Create Init Scripts
                             # ----------------
-                            try:
-                                if "INIT" in repository['install'][0]:
+                            if has_init_command:
+                                try:
                                     subprocess.check_output(
                                         ["[", "-f", "initperal.sh", "]"])
+                                    print("El directorio si que existe")
                                     subprocess.check_output(
                                         ["rm", "-f", "initperal.sh"])
-                                    subprocess.check_output(
-                                        ["touch", "initperal.sh"])
-                                    subprocess.check_output(
-                                        ["chown", real_user, "initperal.sh"])
-                                    print
-                            except subprocess.CalledProcessError:
-                                pass
+                                except subprocess.CalledProcessError:
+                                    pass
+                                subprocess.call(["touch", "initperal.sh"])
+                                subprocess.call(
+                                    ["chown", real_user, "initperal.sh"])
+                                subprocess.call(
+                                    ["chmod", "+x", "initperal.sh"])
                             # ----------
                             #  Running post-download commands
                             # ----------------
@@ -291,6 +303,11 @@ class Core:
                 # ----------------
                 if os.geteuid() == 0:
                     # ----------
+                    #  Peral Tools Installation Folder
+                    # ----------------
+                    if __os == "Linux":
+                        tools_folder = "/opt/peral_tools/"
+                    # ----------
                     #  Confirm Remove Commands
                     # ----------------
                     if __args.yes:
@@ -310,8 +327,8 @@ class Core:
                             # ----------------
                             remove_lk = "rm -f /usr/bin/{}".format(
                                 repository['name'].lower())
-                            remove_repo = "rm -rf /opt/{}".format(
-                                repository['name'])
+                            remove_repo = "rm -rf {}{}".format(
+                                tools_folder, repository['name'])
                             lremove_lk = shlex.split(remove_lk)
                             lremove_repo = shlex.split(remove_repo)
                             # ----------
