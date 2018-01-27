@@ -11,7 +11,7 @@ __author__ = "Kike Puma"
 __copyright__ = "Copyright 2018, CosasDePuma"
 __credits__ = ["KikePuma", "CosasDePuma"]
 __license__ = "MIT"
-__version__ = "0.1d"
+__version__ = "0.1e"
 __maintainer__ = "KikePuma"
 __email__ = "kikefontanlorenzo@gmail.com"
 __status__ = "In development"
@@ -77,3 +77,4 @@ if __name__ == "__main__":
 # Author search
 # Handle errors during installation
 # Stylish search
+# Fix ECHO and WGET dangerous code

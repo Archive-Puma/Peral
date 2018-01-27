@@ -187,12 +187,23 @@ class Core:
                             VARIABLE = int()
                             for cmd in repository['install'][0][__os]:
                                 try:
+                                    # ----------
+                                    #  Replace TAG Words
+                                    # ----------------
+                                    if "<HOME>" in cmd:
+                                        cmd = cmd.replace(
+                                            "<HOME>",
+                                            "/home/{}".format(real_user))
+                                    if "<PWD>" in cmd:
+                                        cmd = cmd.replace(
+                                            "<PWD>", os.getcwd())
+                                    print(cmd)
                                     lcmd = shlex.split(cmd)
                                     # ----------
                                     #  Custom Command: NoSyslink
+                                    # ----------------
                                     if cmd[:9] == "NOSYSLINK":
                                         pass
-                                    # ----------------
                                     # ----------
                                     #  Custom Command: INPUT
                                     # ----------------
@@ -216,14 +227,22 @@ class Core:
                                     elif cmd[:5] == "INIT ":
                                         with open("initperal.sh",
                                                   "a") as script:
-                                            cmd = cmd.replace(
-                                                "<PWD>", os.getcwd())
                                             script.write(
                                                 "{}\n".format(cmd[5:]))
                                     # ----------
                                     #  shell Command: echo
                                     # ----------------
                                     elif "echo" in cmd:
+                                        '''
+                                     !!!!!!!!!!!!!!!!!!!!
+                                     !! DANGEROUS CODE !!
+                                     !!!!!!!!!!!!!!!!!!!!
+                                        '''
+                                        os.system(cmd)
+                                    # ----------
+                                    #  shell Command: wget
+                                    # ----------------
+                                    elif "wget" in cmd:
                                         '''
                                      !!!!!!!!!!!!!!!!!!!!
                                      !! DANGEROUS CODE !!
@@ -238,7 +257,7 @@ class Core:
                                             lcmd,
                                             stdout=FNULL,
                                             stderr=FNULL,
-                                            shell=False)
+                                            shell=True)
                                 except Exception as e:
                                     print(e)
                             if not nosyslink_flag:
@@ -353,6 +372,9 @@ class Core:
                                 print("{}{}[*] Removing syslinks...{}".format(
                                     color.BOLD, color.WARNING, color.ENDC))
                             subprocess.call(lremove_lk, shell=False)
+                            # ----------
+                            #  Remove Repository
+                            # ----------------
                             if not __args.quiet:
                                 print(
                                     "{}{}[*] Removing repository...{}".format(
@@ -361,8 +383,23 @@ class Core:
                             if not __args.quiet:
                                 print("{}{}[*] Removing junk...{}".format(
                                     color.BOLD, color.WARNING, color.ENDC))
+                            # ----------
+                            #  Get real user name
+                            # ----------------
+                            real_user = str()
+                            if 'SUDO_USER' in os.environ:
+                                real_user = os.environ['SUDO_USER']
+                            else:
+                                real_user = os.environ['USER']
+                            # ----------
+                            #  Custom Scripts
+                            # ----------------
                             with open(os.devnull) as FNULL:
                                 for cmd in repository['uninstall'][0]['Linux']:
+                                    if "<HOME>" in cmd:
+                                        cmd = cmd.replace(
+                                            "<HOME>",
+                                            "/home/{}".format(real_user))
                                     lcmd = shlex.split(cmd)
                                     subprocess.call(
                                         lcmd,
