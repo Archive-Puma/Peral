@@ -49,6 +49,11 @@
       "id": 9,
       "name": "Leviathan-Framework",
       "repos": [ 10 ]
+    },
+    {
+      "id": 10,
+      "name": "Hugsy",
+      "repos": [ 11 ]
     }
   ],
   "repos": [
@@ -290,7 +295,7 @@
       "id": 10,
       "name": "Leviathan",
       "author": "Leviathan-Framework",
-      "description": "Wide range mass audit toolkit ",
+      "description": "Wide range mass audit toolkit",
       "language": [ "python2" ],
       "main-script": "leviathan.py",
       "version": "0.1.2",
@@ -306,6 +311,34 @@
         {
           "Linux": [
             "rm -f /usr/bin/masscan"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "GEF",
+      "author": "Hugsy",
+      "description": "Multi-Architecture GDB Enhanced Features for exploit devs & reversers http://gef.rtfd.io",
+      "language": [ "python" ],
+      "main-script": "",
+      "version": "Unknown",
+      "commit": "fa237e2",
+      "install": [
+        {
+          "Linux": [
+            "NOSYSLINK",
+            "wget -q -O <HOME>/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py",
+            "mv <HOME>/.gdbinit <HOME>/.gdbinit.old",
+            "echo \"source ~/.gdbinit-gef.py\" > ~/.gdbinit"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [
+            "rm -f <HOME>/.gdbinit-gef.py <HOME>/.gdbinit",
+            "mv <HOME>/.gdbinit.old <HOME>/.gdbinit"
           ]
         }
       ]
