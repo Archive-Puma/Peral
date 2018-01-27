@@ -197,7 +197,6 @@ class Core:
                                     if "<PWD>" in cmd:
                                         cmd = cmd.replace(
                                             "<PWD>", os.getcwd())
-                                    print(cmd)
                                     lcmd = shlex.split(cmd)
                                     # ----------
                                     #  Custom Command: NoSyslink
