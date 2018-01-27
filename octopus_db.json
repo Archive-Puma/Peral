@@ -44,6 +44,11 @@
       "id": 8,
       "name": "Sh1n0g1",
       "repos": [ 9 ]
+    },
+    {
+      "id": 9,
+      "name": "Leviathan-Framework",
+      "repos": [ 10 ]
     }
   ],
   "repos": [
@@ -278,6 +283,30 @@
       "uninstall": [
         {
           "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Leviathan",
+      "author": "Leviathan-Framework",
+      "description": "Wide range mass audit toolkit ",
+      "language": [ "python2" ],
+      "main-script": "leviathan.py",
+      "version": "0.1.2",
+      "commit": "7b48188",
+      "install": [
+        {
+          "Linux": [
+            "bash scripts/debian_install.sh"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [
+            "rm -f /usr/bin/masscan"
+          ]
         }
       ]
     }
