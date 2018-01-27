@@ -13,7 +13,37 @@
     {
       "id": 2,
       "name": "D4Vinci",
-      "repos": [ 1 ]
+      "repos": [ 1, 5 ]
+    },
+    {
+      "id": 3,
+      "name": "Screetsec",
+      "repos": [ 3 ]
+    },
+    {
+      "id": 4,
+      "name": "dxa4481",
+      "repos": [ 4 ]
+    },
+    {
+      "id": 5,
+      "name": "Speed47",
+      "repos": [ 6 ]
+    },
+    {
+      "id": 6,
+      "name": "Boxug",
+      "repos": [ 7 ]
+    },
+    {
+      "id": 7,
+      "name": "ToolsWatch",
+      "repos": [ 8 ]
+    },
+    {
+      "id": 8,
+      "name": "Sh1n0g1",
+      "repos": [ 9 ]
     }
   ],
   "repos": [
@@ -25,6 +55,7 @@
       "language": [ "python2" ],
       "main-script": "bobo.py",
       "version": "2.8a",
+      "commit": "78237de",
       "install": [
         {
           "Linux": [
@@ -51,6 +82,7 @@
       "language": [ "python3", "python2" ],
       "main-script": "initperal.sh",
       "version": "1.0",
+      "commit": "655b165",
       "install": [
         {
           "Linux": [
@@ -78,9 +110,169 @@
       "language": [ "python2" ],
       "main-script": "sqlmap.py",
       "version": "1.2.1.14",
+      "commit": "",
       "install": [
         {
           "Linux": [ ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Vegile",
+      "author": "Screetsec",
+      "description": "This tool will setting up your backdoor/rootkits when backdoor already setup it will be hidden your spesisifc process,unlimited your session in metasploit and transparent. Even when it killed, it will re-run again. There always be a procces which while run another process,So we can assume that this procces is unstopable like a Ghost in The Shell",
+      "language": [ "bash" ],
+      "main-script": "Vegile",
+      "version": "Unknown",
+      "commit": "236fb75",
+      "install": [
+        {
+          "Linux": [
+            "chmod +x Vegile"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "TruffleHog",
+      "author": "dxa4481",
+      "description": "Searches through git repositories for high entropy strings and secrets, digging deep into commit history",
+      "language": [ "python" ],
+      "main-script": "",
+      "version": "Unknown",
+      "commit": "461953f",
+      "install": [
+        {
+          "Linux": [
+            "NOSYSLINK",
+            "pip install truffleHog"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ "pip uninstall -y truffleHog" ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Cr3dOv3r",
+      "author": "D4Vinci",
+      "description": "Know the dangers of credential reuse attacks.",
+      "language": [ "python3", "python2" ],
+      "main-script": "initperal.sh",
+      "version": "0.3.1",
+      "commit": "99c6d0c",
+      "install": [
+        {
+          "Linux": [
+            "chmod 755 -R ../",
+            "pip install -r requirements.txt",
+            "INIT #! /bin/bash",
+            "INIT pushd <PWD> > /dev/null",
+            "INIT python Cr3d0v3r.py $@",
+            "INIT popd > /dev/null"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Spectre-Meltdown-Checker",
+      "author": "Speed47",
+      "description": "Spectre & Meltdown vulnerability/mitigation checker for Linux",
+      "language": [ "bash" ],
+      "main-script": "spectre-meltdown-checker.sh",
+      "version": "Unknown",
+      "commit": "7404929",
+      "install": [
+        {
+          "Linux": [ ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Trape",
+      "author": "Boxug",
+      "description": "People tracker on the Internet: Learn to track the world, to avoid being traced.",
+      "language": [ "python" ],
+      "main-script": "trape.py",
+      "version": "1.0.0",
+      "commit": "2dd2aa0",
+      "install": [
+        {
+          "Linux": [
+            "pip install -r requirements.txt",
+            "chmod +x trape.py"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Blackhat-Arsenal-Tools",
+      "author": "ToolsWatch",
+      "description": "Official Black Hat Arsenal Security Tools Repository https://www.toolswatch.org/category/arsenal/",
+      "language": [ "markdown" ],
+      "main-script": "",
+      "version": "Unknown",
+      "commit": "6f74b62",
+      "install": [
+        {
+          "Linux": [
+            "NOSYSLINK"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "ShinoBOT",
+      "author": "Sh1n0g1",
+      "description": "RAT/Botnet Simulator for pentest/education http://shinobot.com",
+      "language": [ ],
+      "main-script": "",
+      "version": "3.1.0.0",
+      "commit": "d535ccc",
+      "install": [
+        {
+          "Linux": [
+            "NOSYSLINK"
+          ]
         }
       ],
       "uninstall": [
