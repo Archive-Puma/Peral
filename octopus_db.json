@@ -54,6 +54,16 @@
       "id": 10,
       "name": "Hugsy",
       "repos": [ 11 ]
+    },
+    {
+      "id": 11,
+      "name": "CommixProject",
+      "repos": [ 12 ]
+    },
+    {
+      "id": 12,
+      "name": "Neoneggplant",
+      "repos": [ 13 ]
     }
   ],
   "repos": [
@@ -340,6 +350,53 @@
             "rm -f <HOME>/.gdbinit-gef.py <HOME>/.gdbinit",
             "mv <HOME>/.gdbinit.old <HOME>/.gdbinit"
           ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Commix",
+      "author": "CommixProject",
+      "description": "Automated All-in-One OS command injection and exploitation tool. http://commixproject.com",
+      "language": [ "python2" ],
+      "main-script": "commix.py",
+      "version": "Unknown",
+      "commit": "386d647",
+      "install": [
+        {
+          "Linux": [
+            "chmod +x commix.py"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "EggShell",
+      "author": "Neoneggplant",
+      "description": "iOS/macOS/Linux Remote Administration Tool ",
+      "language": [ "python2" ],
+      "main-script": "initperal.sh",
+      "version": "3.0.0",
+      "commit": "ca8b1b4",
+      "install": [
+        {
+          "Linux": [
+            "INIT #! /bin/bash",
+            "INIT pushd <PWD> > /dev/null",
+            "INIT python eggshell.py",
+            "INIT popd > /dev/null"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
         }
       ]
     }
