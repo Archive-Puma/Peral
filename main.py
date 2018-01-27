@@ -1,4 +1,4 @@
-#! /usr/bi/env python
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # requirements.txt : future
@@ -11,7 +11,7 @@ __author__ = "Kike Puma"
 __copyright__ = "Copyright 2018, CosasDePuma"
 __credits__ = ["KikePuma", "CosasDePuma"]
 __license__ = "MIT"
-__version__ = "0.1c"
+__version__ = "0.1d"
 __maintainer__ = "KikePuma"
 __email__ = "kikefontanlorenzo@gmail.com"
 __status__ = "In development"

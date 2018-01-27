@@ -83,10 +83,19 @@ class Core:
                             tools_folder, repository['name'], ">", "/dev/null")
                     ]
                     # ----------
+                    #  Ckeck Special Commands
+                    # ----------------
+                    nosyslink_flag = False
+                    has_init_command = False
+                    for cmd in repository['install'][0][__os]:
+                        if "INIT " == cmd[:5]:
+                            has_init_command = True
+                        elif "NOSYSLINK" == cmd[:9]:
+                            nosyslink_flag = True
+                    # ----------
                     #  Print Setup Commands
                     # ----------------
                     if not __args.quiet:
-                        has_init_command = False
                         print(color.BOLD + color.OKBLUE +
                               "\n[*] SETUP COMMANDS:")
                         print("----------------------------------------------"
@@ -94,8 +103,6 @@ class Core:
                         print(color.WARNING + "git clone {}".format(gitlink) +
                               color.ENDC)
                         for cmd in repository['install'][0][__os]:
-                            if "INIT " == cmd[:5]:
-                                has_init_command = True
                             print(color.WARNING + cmd + color.ENDC)
                         print(
                             color.BOLD + color.OKBLUE +
@@ -182,9 +189,14 @@ class Core:
                                 try:
                                     lcmd = shlex.split(cmd)
                                     # ----------
+                                    #  Custom Command: NoSyslink
+                                    if cmd[:9] == "NOSYSLINK":
+                                        pass
+                                    # ----------------
+                                    # ----------
                                     #  Custom Command: INPUT
                                     # ----------------
-                                    if cmd[:6] == "INPUT ":
+                                    elif cmd[:6] == "INPUT ":
                                         VARIABLE = input(
                                             "{}{}[-] {}{}".format(
                                                 color.BOLD, color.OKGREEN,
@@ -229,46 +241,49 @@ class Core:
                                             shell=False)
                                 except Exception as e:
                                     print(e)
-                            # ----------
-                            #  Create a Syslink
-                            # ----------------
-                            if __os == "Linux":
+                            if not nosyslink_flag:
                                 # ----------
-                                #  Ask to the user
+                                #  Create a Syslink
                                 # ----------------
-                                syslink_comfirmation = ''
-                                if not __args.yes:
-                                    syslink_comfirmation = input(
-                                        "{}{}[?] Would you like to create ".
-                                        format(color.BOLD, color.WARNING) +
-                                        "a syslink named {}{}{}{}{}? [Y/n]: {}".
-                                        format(
-                                            color.UNDERLINE, repository['name']
-                                            .lower(), color.ENDC, color.
-                                            WARNING, color.BOLD, color.ENDC))
-                                # ----------
-                                #  Try to link the program
-                                # ----------------
-                                if syslink_comfirmation.lower == 'Y' or syslink_comfirmation == '':
-                                    lk = "sudo ln -s {}/{} /usr/bin/{}".format(
-                                        os.getcwd(), repository['main-script'],
-                                        str(repository['name']).lower())
-                                    llk = shlex.split(lk)
-                                    try:
-                                        subprocess.check_call(
-                                            llk, stderr=FNULL, shell=False)
+                                if __os == "Linux":
                                     # ----------
-                                    #  Catch the exception
+                                    #  Ask to the user
                                     # ----------------
-                                    except subprocess.CalledProcessError:
-                                        if not __args.quiet:
-                                            print(
-                                                "{}{}[!] Error: Please, delete".
-                                                format(color.BOLD, color.FAIL)
-                                                + " or rename " +
-                                                "/usr/bin/{}".format(
-                                                    repository['name'].lower())
-                                            )
+                                    syslink_comfirmation = ''
+                                    if not __args.yes:
+                                        syslink_comfirmation = input(
+                                            "{}{}[?] Would you like to create ".
+                                            format(color.BOLD, color.WARNING) +
+                                            "a syslink named {}{}{}{}{}? [Y/n]: {}".
+                                            format(color.UNDERLINE,
+                                                   repository['name'].lower(),
+                                                   color.ENDC, color.WARNING,
+                                                   color.BOLD, color.ENDC))
+                                    # ----------
+                                    #  Try to link the program
+                                    # ----------------
+                                    if syslink_comfirmation.lower == 'Y' or syslink_comfirmation == '':
+                                        lk = "sudo ln -s {}/{} /usr/bin/{}".format(
+                                            os.getcwd(),
+                                            repository['main-script'],
+                                            str(repository['name']).lower())
+                                        llk = shlex.split(lk)
+                                        try:
+                                            subprocess.check_call(
+                                                llk, stderr=FNULL, shell=False)
+                                        # ----------
+                                        #  Catch the exception
+                                        # ----------------
+                                        except subprocess.CalledProcessError:
+                                            if not __args.quiet:
+                                                print(
+                                                    "{}{}[!] Error: Please, delete".
+                                                    format(
+                                                        color.BOLD, color.FAIL)
+                                                    + " or rename " +
+                                                    "/usr/bin/{}".format(
+                                                        repository['name']
+                                                        .lower()))
                         # ----------
                         #  Installation confirmation
                         # ----------------
@@ -337,11 +352,23 @@ class Core:
                             if not __args.quiet:
                                 print("{}{}[*] Removing syslinks...{}".format(
                                     color.BOLD, color.WARNING, color.ENDC))
-                                subprocess.call(lremove_lk, shell=False)
+                            subprocess.call(lremove_lk, shell=False)
+                            if not __args.quiet:
                                 print(
                                     "{}{}[*] Removing repository...{}".format(
                                         color.BOLD, color.WARNING, color.ENDC))
-                                subprocess.call(lremove_repo, shell=False)
+                            subprocess.call(lremove_repo, shell=False)
+                            if not __args.quiet:
+                                print("{}{}[*] Removing junk...{}".format(
+                                    color.BOLD, color.WARNING, color.ENDC))
+                            with open(os.devnull) as FNULL:
+                                for cmd in repository['uninstall'][0]['Linux']:
+                                    lcmd = shlex.split(cmd)
+                                    subprocess.call(
+                                        lcmd,
+                                        stdout=FNULL,
+                                        stderr=FNULL,
+                                        shell=False)
                         # ----------
                         #  Desinstallation confirmation
                         # ----------------
