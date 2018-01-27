@@ -379,7 +379,7 @@
       "id": 13,
       "name": "EggShell",
       "author": "Neoneggplant",
-      "description": "iOS/macOS/Linux Remote Administration Tool ",
+      "description": "iOS/macOS/Linux Remote Administration Tool",
       "language": [ "python2" ],
       "main-script": "initperal.sh",
       "version": "3.0.0",
@@ -391,6 +391,27 @@
             "INIT pushd <PWD> > /dev/null",
             "INIT python eggshell.py",
             "INIT popd > /dev/null"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "CTF-Tools",
+      "author": "Zardus",
+      "description": "Some setup scripts for security research tools.",
+      "language": [ "python2" ],
+      "main-script": "bin/manage-tools",
+      "version": "Unknown",
+      "commit": "f2431a0",
+      "install": [
+        {
+          "Linux": [
           ]
         }
       ],
