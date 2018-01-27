@@ -64,6 +64,16 @@
       "id": 12,
       "name": "Neoneggplant",
       "repos": [ 13 ]
+    },
+    {
+      "id": 13,
+      "name": "Reyammer",
+      "repos": [ 15 ]
+    },
+    {
+      "id": 14,
+      "name": "Zardus",
+      "repos": [ 14 ]
     }
   ],
   "repos": [
@@ -412,6 +422,28 @@
       "install": [
         {
           "Linux": [
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "ShellNoob",
+      "author": "Reyammer",
+      "description": "A shellcode writing toolkit",
+      "language": [ "python2" ],
+      "main-script": "shellnoob.py",
+      "version": "2.0",
+      "commit": " c923d5e",
+      "install": [
+        {
+          "Linux": [
+            "chmod +x shellnoob.py"
           ]
         }
       ],
