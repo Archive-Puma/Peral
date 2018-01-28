@@ -83,7 +83,7 @@
     {
       "id": 16,
       "name": "Manisso",
-      "repos": [ 17 ]
+      "repos": [ 17, 18 ]
     }
   ],
   "repos": [
@@ -507,6 +507,31 @@
           "Linux": [
             "INIT #! /bin/bash",
             "INIT python <PWD>/crips.py $@"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "FSociety",
+      "author": "Manisso",
+      "description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
+      "language": [ "python2" ],
+      "main-script": "initperal.sh",
+      "version": "Unknown",
+      "commit": "1623ef3",
+      "install": [
+        {
+          "Linux": [
+            "INIT #! /bin/bash",
+            "INIT pushd <PWD> > /dev/null",
+            "INIT python fsociety.py $@",
+            "INIT popd > /dev/null"
           ]
         }
       ],
