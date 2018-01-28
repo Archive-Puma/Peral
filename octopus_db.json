@@ -79,6 +79,11 @@
       "id": 15,
       "name": "Epsylon",
       "repos": [ 16 ]
+    },
+    {
+      "id": 16,
+      "name": "Manisso",
+      "repos": [ 17 ]
     }
   ],
   "repos": [
@@ -479,6 +484,29 @@
             "INIT pushd <PWD> > /dev/null",
             "INIT python ufonet $@",
             "INIT popd > /dev/null"
+          ]
+        }
+      ],
+      "uninstall": [
+        {
+          "Linux": [ ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Crips",
+      "author": "Manisso",
+      "description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
+      "language": [ "python2" ],
+      "main-script": "initperal.sh",
+      "version": "Unknown",
+      "commit": "8ec6ef0",
+      "install": [
+        {
+          "Linux": [
+            "INIT #! /bin/bash",
+            "INIT python <PWD>/crips.py $@"
           ]
         }
       ],
