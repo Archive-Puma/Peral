@@ -1,80 +1,70 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# requirements.txt : future
+from core.information import Info
+from core.jsonreader import ReadJSON
+from core.install.linux import LinuxInstaller
+
 
 # ============================================= #
-#  --------------- Header Info ---------------  #
+#  -------------- Release Info ---------------  #
 # ============================================= #
+class release:
+    __author__ = "Kike Puma"
+    __copyright__ = "Copyright 2018, CosasDePuma"
+    __credits__ = ["KikePuma", "CosasDePuma"]
+    __license__ = "MIT"
+    __version__ = "1.0a"
+    __maintainer__ = "KikePuma"
+    __email__ = "kikefontanlorenzo@gmail.com"
+    __status__ = "In development"
 
-__author__ = "Kike Puma"
-__copyright__ = "Copyright 2018, CosasDePuma"
-__credits__ = ["KikePuma", "CosasDePuma"]
-__license__ = "MIT"
-__version__ = "0.1f"
-__maintainer__ = "KikePuma"
-__email__ = "kikefontanlorenzo@gmail.com"
-__status__ = "In development"
 
 # ============================================= #
-#  ----------------- Modules -----------------  #
+#  ------------------ Colors -----------------  #
 # ============================================= #
+class color:
+    BOLD = '\033[1m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
 
-import argparse
-
-from core import Core
-from core import Info
-from core import Reader
-from core import Security
 
 # ============================================= #
 #  --------------- Arguments -----------------  #
 # ============================================= #
+class args:
+    repo = "Cr3dOv3r"
 
-parser = argparse.ArgumentParser(version=__version__)
-subparser = parser.add_subparsers(dest="cmd")
-
-for cmd in ["install", "search", "uninstall"]:
-    subsubparser = subparser.add_parser(cmd)
-    subsubparser.add_argument('repository', type=str)
-    if "install" in cmd:
-        subsubparser.add_argument(
-            '-q',
-            '--quiet',
-            '--silent',
-            help="Do not print info messages",
-            action="store_true")
-        subsubparser.add_argument(
-            '-y', '--yes', help="Accept all dialogs", action="store_true")
-
-args = parser.parse_args()
 
 # ============================================= #
 #  ------------------ Main -------------------  #
 # ============================================= #
+class Main:
+    database_name = "octopus_db.json"
 
-if __name__ == "__main__":
-    core = Core()
-    info = Info()
-    security = Security(info.getpath())
-    reader = Reader("{}".format(info.getpath()))
+    def __init__(self):
+        self.info = Info()
+        self.database_path = self.info.get_filepath(self.database_name)
+        self.reader = ReadJSON(self.database_path)
+        self.database = self.reader.read()
+        if not self.database:
+            raise IOError('Database not found')
 
-    if security.is_secure():
-        if args.cmd == "install":
-            core.install(reader.getjson(), args.repository, info.getos(), args)
-        elif args.cmd == "search":
-            core.search(reader.getjson(), args.repository)
-        elif args.cmd == "uninstall":
-            core.uninstall(reader.getjson(), args.repository,
-                           info.getos(), args)
-    else:
-        security.not_secure()
+    def configure(self):
+        if self.info.get_os() == "Linux":
+            self.distro = self.info.get_distro()
+            self.installation_path = "/opt/peral_tools"
+            self.installer = LinuxInstaller(self.database,
+                                            self.installation_path, self.info)
 
-# ============================================= #
-#  ------------------ ToDo's -----------------  #
-# ============================================= #
+            repository = self.installer.search(args.repo)
+            self.installer.install(repository)
 
-# Author search
-# Handle errors during installation
-# Stylish search
-# Fix ECHO and WGET dangerous code
+
+if __name__ == '__main__':
+    try:
+        main = Main()
+        main.configure()
+    except (IOError, SystemError, ImportError) as custom_exception:
+        print("{}{}[!] {}{}".format(color.BOLD, color.FAIL,
+                                    custom_exception[0], color.ENDC))
