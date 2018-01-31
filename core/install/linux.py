@@ -49,24 +49,6 @@ class LinuxInstaller:
 # ============================================= #
 #  --------- Basic Install Functions ---------  #
 # ============================================= #
-# ----------
-#  Search Function
-# ----------------
-
-    def search(self, __repository):
-        # ----------
-        #  Variables
-        # ----------------
-        found = False
-        return_repositoy = None
-        # ----------
-        #  Find Repository
-        # ----------------
-        for repository in self.__database['repos']:
-            if not found and __repository.lower() == repository['name'].lower(
-            ):
-                return_repositoy = repository
-        return return_repositoy
 
     # ----------
     #  Install Function
@@ -127,6 +109,7 @@ class LinuxInstaller:
 # ============================================= #
 #  -------- Complex Install Functions --------  #
 # ============================================= #
+
 # ----------
 #  Git Clone Function
 # ----------------
