@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
+
 from core.information import Info
 from core.jsonreader import ReadJSON
 from core.install.linux import LinuxInstaller
@@ -32,8 +34,24 @@ class color:
 # ============================================= #
 #  --------------- Arguments -----------------  #
 # ============================================= #
-class args:
-    repo = "Cr3dOv3r"
+
+parser = argparse.ArgumentParser(version=release.__version__)
+subparser = parser.add_subparsers(dest="cmd")
+
+for cmd in ["install", "search", "uninstall"]:
+    subsubparser = subparser.add_parser(cmd)
+    subsubparser.add_argument('repository', type=str)
+    if "install" in cmd:
+        subsubparser.add_argument(
+            '-q',
+            '--quiet',
+            '--silent',
+            help="Do not print info messages",
+            action="store_true")
+        subsubparser.add_argument(
+            '-y', '--yes', help="Accept all dialogs", action="store_true")
+
+args = parser.parse_args()
 
 
 # ============================================= #
@@ -57,14 +75,16 @@ class Main:
             self.installer = LinuxInstaller(self.database,
                                             self.installation_path, self.info)
 
-            repository = self.installer.search(args.repo)
-            self.installer.install(repository)
+    def install(self, __reponame):
+        self.installer.install(self.installer.search(__reponame))
 
 
 if __name__ == '__main__':
     try:
         main = Main()
-        main.configure()
+        if args.cmd == "install":
+            main.configure()
+            main.install(args.repository)
     except (IOError, SystemError, ImportError) as custom_exception:
         print("{}{}[!] {}{}".format(color.BOLD, color.FAIL,
                                     custom_exception[0], color.ENDC))

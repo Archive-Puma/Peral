@@ -108,12 +108,10 @@ class LinuxInstaller:
                         #  Handle execution errors
                         # ----------------
                         try:
-                            subprocess.check_output(
-                                shsplit(cmd), stderr=FNULL, shell=True)
+                            subprocess.check_output(shsplit(cmd), stderr=FNULL)
                         except subprocess.CalledProcessError:
-                            # print("{}[!] Error running: {}{}{}".format(
-                            #     color.FAIL, color.WARNING, cmd, color.ENDC))
-                            pass
+                            print("{}[!] Error running: {}{}{}".format(
+                                color.FAIL, color.WARNING, cmd, color.ENDC))
             # ----------
             #  Check for Syslink
             # ----------------
