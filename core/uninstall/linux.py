@@ -54,6 +54,7 @@ class LinuxUninstaller:
         #  User Security Confirmation
         # ----------------
         if self.confirm_uninstall(__repository['name']):
+            self.remove_scripts(__repository['uninstall'][0]['Linux'])
             self.remove_repository(__repository['name'])
 
 
@@ -72,6 +73,19 @@ class LinuxUninstaller:
         return input(
             "{}{}[?] Would you like to uninstall {} repository? [y/N]: {}".
             format(color.BOLD, color.FAIL, __name, color.ENDC)).lower() == 'y'
+
+    # ----------
+    #  Remove Script Function
+    # ---------------
+    def remove_scripts(self, __scripts):
+        print("{}{}[*] Running uninstaller scripts...{}".format(
+            color.BOLD, color.OKBLUE, color.ENDC))
+        for cmd in __scripts:
+            try:
+                subprocess.check_output(shsplit(cmd))
+            except subprocess.CalledProcessError:
+                print("{}[!] Error running: {}{}{}".format(
+                    color.FAIL, color.WARNING, cmd, color.ENDC))
 
     # ----------
     #  Remove Function
