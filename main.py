@@ -118,21 +118,20 @@ class Main:
     # ----------
     #  Search Function
     # ----------------
-
-        def search(self, __repository):
-            # ----------
-            #  Variables
-            # ----------------
-            found = False
-            return_repositoy = None
-            # ----------
-            #  Find Repository
-            # ----------------
-            for repository in self.database['repos']:
-                if not found and __repository.lower(
-                ) == repository['name'].lower():
-                    return_repositoy = repository
-            return return_repositoy
+    def search(self, __repository):
+        # ----------
+        #  Variables
+        # ----------------
+        found = False
+        return_repositoy = None
+        # ----------
+        #  Find Repository
+        # ----------------
+        for repository in self.database['repos']:
+            if not found and __repository.lower() == repository['name'].lower(
+            ):
+                return_repositoy = repository
+        return return_repositoy
 
 
 # ============================================= #
@@ -146,32 +145,45 @@ if __name__ == '__main__':
     try:
         main = Main()
         # ----------
-        #  Install repository
+        #  Search repositories
         # ----------------
-        if args.cmd == "install":
-            main.configure()
+        if args.cmd == "search":
+            pass
+        else:
             # ----------
-            #  Search the repository
+            #  Check Privileges
             # ----------------
-            repository = self.search(__reponame)
-            if repository is not None:
-                # ----------
-                #  Install the repository
-                # ----------------
-                if args.cmd == "install":
-                    self.installer.install(repository)
-                # ----------
-                #  Uninstall the repository
-                # ----------------
-                elif args.cmd == "uninstall":
-                    self.installer.uninstall(repository)
+            if not main.info.is_privileged():
+                print("{}{}[!] You must be root!{}".format(
+                    color.BOLD, color.FAIL, color.ENDC))
             else:
                 # ----------
-                #  Handle errors
+                #  Install and uninstall repositories
                 # ----------------
-                print("{}[!] Repository {} not found in the DB{}".format(
-                    color.FAIL, __reponame, color.ENDC))
-            main.install(args.repository)
+                if "install" in args.cmd:
+                    main.configure()
+                    # ----------
+                    #  Search the repository
+                    # ----------------
+                    repository = main.search(args.repository)
+                    if repository is not None:
+                        # ----------
+                        #  Install the repository
+                        # ----------------
+                        if args.cmd == "install":
+                            main.installer.install(repository)
+                        # ----------
+                        #  Uninstall the repository
+                        # ----------------
+                        elif args.cmd == "uninstall":
+                            main.installer.uninstall(repository)
+                    else:
+                        # ----------
+                        #  Handle errors
+                        # ----------------
+                        print(
+                            "{}[!] Repository {} not found in the DB{}".format(
+                                color.FAIL, __reponame, color.ENDC))
     # ----------
     #  Custom exceptions
     # ----------------
