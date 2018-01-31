@@ -56,11 +56,6 @@ class LinuxInstaller:
 
     def install(self, __repository):
         # ----------
-        #  Check Privileges
-        # ----------------
-        if not self.__info.is_privileged():
-            raise SystemError("You must be root")
-        # ----------
         #  User Security Confirmation
         # ----------------
         if self.confirm_commands(__repository['name'],
