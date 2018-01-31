@@ -50,9 +50,10 @@ class LinuxInstaller:
 #  --------- Basic Install Functions ---------  #
 # ============================================= #
 
-    # ----------
-    #  Install Function
-    # ----------------
+# ----------
+#  Install Function
+# ----------------
+
     def install(self, __repository):
         # ----------
         #  Check Privileges
@@ -174,11 +175,15 @@ class LinuxInstaller:
         print("{}{}---------------------------------------{}".format(
             color.BOLD, color.OKBLUE, color.FAIL))
         # ----------
+        # Get User Option
+        # ----------------
+        option = input(
+            "[?] Are you sure to install {} executing this commands? [Y/n] {}".
+            format(__name, color.ENDC)).lower()
+        # ----------
         #  Return User Input
         # ----------------
-        return input(
-            "[?] Are you sure to install {} executing this commands? [Y/n] {}".
-            format(__name, color.ENDC)).lower() == 'y'
+        return option == 'y' or option == ''
 
     # ----------
     #  Format custom commands
@@ -292,13 +297,17 @@ class LinuxInstaller:
     def confirm_syslink(self, __name):
         __name = __name.lower()
         # ----------
-        #  Return option
-        # ---------------
-        return input("{}{}[?] {} {}{}{}{}{}? [Y/n]: {}".format(
+        #  Get User Option
+        # ----------------
+        option = input("{}{}[?] {} {}{}{}{}{}? [Y/n]: {}".format(
             color.BOLD, color.WARNING,
             "Would you like to create a syslink named", color.UNDERLINE,
             __name, color.ENDC, color.BOLD, color.WARNING,
-            color.ENDC)).lower() == 'y'
+            color.ENDC)).lower()
+        # ----------
+        #  Return option
+        # ---------------
+        return option == 'y' or option == ''
 
     # ----------
     #  Syslink Function
