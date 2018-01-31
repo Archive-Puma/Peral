@@ -336,7 +336,7 @@ class LinuxInstaller:
         #  Handle exception
         # ---------------
         try:
-            print("{}{}[!] Creating a syslink...{}".format(
+            print("{}{}[*] Creating a syslink...{}".format(
                 color.BOLD, color.OKBLUE, color.ENDC))
             # ----------
             #  Create Syslink
