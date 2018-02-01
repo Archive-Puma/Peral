@@ -93,7 +93,7 @@ class Main:
     # ----------
     #  Configure Installers
     # ----------------
-    def configure(self):
+    def configure_installer(self):
         # ----------
         #  Check OS
         # ----------------
@@ -115,6 +115,8 @@ class Main:
                 self.installer = LinuxUninstaller(
                     self.database, self.installation_path, self.info, args)
 
+    def configure_searcher(self):
+        pass
     # ----------
     #  Search Function
     # ----------------
@@ -161,7 +163,7 @@ if __name__ == '__main__':
                 #  Install and uninstall repositories
                 # ----------------
                 if "install" in args.cmd:
-                    main.configure()
+                    main.configure_installer()
                     # ----------
                     #  Search the repository
                     # ----------------
