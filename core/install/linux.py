@@ -38,8 +38,9 @@ class LinuxInstaller:
     # ----------
     #  Init Function
     # ----------------
-    def __init__(self, __database, __installation_folder, __info):
+    def __init__(self, __database, __installation_folder, __info, __args):
         self.__info = __info
+        self.__args = __args
         self.__syslink_flag = True
         self.__database = __database
         self.__initscript = "initperal.sh"
@@ -76,7 +77,7 @@ class LinuxInstaller:
             # ----------
             #  Installation Commands
             # ----------------
-            print("{}{}[*] Running Setup Scripts...{}".format(
+            self.qprint("{}{}[*] Running Setup Scripts...{}".format(
                 color.BOLD, color.OKBLUE, color.ENDC))
             for cmd in __repository['install'][0]['Linux']:
                 with open(self.__info.get_devnull(), "w") as FNULL:
@@ -88,7 +89,7 @@ class LinuxInstaller:
                         try:
                             subprocess.check_output(shsplit(cmd), stderr=FNULL)
                         except subprocess.CalledProcessError:
-                            print("{}[!] Error running: {}{}{}".format(
+                            self.qprint("{}[!] Error running: {}{}{}".format(
                                 color.FAIL, color.WARNING, cmd, color.ENDC))
             # ----------
             #  Check for Syslink
@@ -100,7 +101,6 @@ class LinuxInstaller:
                     # ----------------
                     self.create_syslink(__repository['name'],
                                         __repository['main-script'])
-
 
 # ============================================= #
 #  -------- Complex Install Functions --------  #
@@ -130,18 +130,20 @@ class LinuxInstaller:
                 #  Handle Errors
                 # ----------------
                 try:
-                    print("{}{}[*] Removing old installations...{}".format(
-                        color.BOLD, color.OKBLUE, color.ENDC))
+                    self.qprint(
+                        "{}{}[*] Removing old installations...{}".format(
+                            color.BOLD, color.OKBLUE, color.ENDC))
                     subprocess.check_output(
                         shsplit(rm_old_repo_cmd), stderr=FNULL)
                 except subprocess.CalledProcessError:
-                    print("{}{}[*] Failed to remove old repositories{}".format(
-                        color.BOLD, color.FAIL, color.ENDC))
+                    self.qprint(
+                        "{}{}[*] Failed to remove old repositories{}".format(
+                            color.BOLD, color.FAIL, color.ENDC))
         # ----------
         #  Handle Errors
         # ----------------
             try:
-                print("{}{}[*] Clonning GitHub repository...{}".format(
+                self.qprint("{}{}[*] Clonning GitHub repository...{}".format(
                     color.BOLD, color.OKBLUE, color.ENDC))
                 subprocess.check_output(shsplit(git_command), stderr=FNULL)
             except subprocess.CalledProcessError:
@@ -153,10 +155,10 @@ class LinuxInstaller:
     def confirm_commands(self, __name, __commands):
         self.init_script_needed = False
 
-        print("")
-        print("{}{}[*] SETUP COMMANDS:".format(color.BOLD, color.OKBLUE))
-        print("-------------------------{}{}".format(color.ENDC,
-                                                     color.WARNING))
+        self.qprint("")
+        self.qprint("{}{}[*] SETUP COMMANDS:".format(color.BOLD, color.OKBLUE))
+        self.qprint("-------------------------{}{}".format(
+            color.ENDC, color.WARNING))
         # ----------
         #  Read Setup Commands
         # ----------------
@@ -166,15 +168,16 @@ class LinuxInstaller:
             # ----------------
             if not self.init_script_needed and "INIT " == cmd[:5]:
                 self.init_script_needed = True
-            print(cmd)
-        print("{}{}---------------------------------------{}".format(
+            self.qprint(cmd)
+        self.qprint("{}{}---------------------------------------{}".format(
             color.BOLD, color.OKBLUE, color.FAIL))
         # ----------
         # Get User Option
         # ----------------
-        option = input(
-            "[?] Are you sure to install {} executing this commands? [Y/n] {}".
-            format(__name, color.ENDC)).lower()
+        dialog = " executing this commands" if not self.__args.quiet else str()
+        option = input("{}{}[?] Are you sure to install {}{}? [Y/n] {}".format(
+            color.BOLD, color.FAIL, __name, dialog,
+            color.ENDC)).lower() if not self.__args.yes else 'y'
         # ----------
         #  Return User Input
         # ----------------
@@ -203,6 +206,7 @@ class LinuxInstaller:
         elif __cmd[:5] == "INIT ":
             with open("initperal.sh", "a") as init_script:
                 init_script.write("{}\n".format(__cmd[5:]))
+            __cmd = None
         # ----------
         #  Check for an input value
         # ----------------
@@ -249,7 +253,7 @@ class LinuxInstaller:
                 subprocess.check_output(
                     shsplit(cmd), stderr=FNULL, shell=False)
         except subprocess.CalledProcessError:
-            print("{}[!] Error changing {} owner{}".format(
+            self.qprint("{}[!] Error changing {} owner{}".format(
                 color.FAIL, full_path, color.ENDC))
         # ----------
         #  Change directory
@@ -275,7 +279,7 @@ class LinuxInstaller:
         # ---------------
         try:
             with open(self.__info.get_devnull(), "w") as FNULL:
-                print("{}{}[*] Touching {} script...{}".format(
+                self.qprint("{}{}[*] Touching {} script...{}".format(
                     color.BOLD, color.OKBLUE, self.__initscript, color.ENDC))
                 # ----------
                 #  Executing commands
@@ -283,7 +287,7 @@ class LinuxInstaller:
                 subprocess.check_output(shsplit(chm), stderr=FNULL)
                 subprocess.check_output(shsplit(chw), stderr=FNULL)
         except subprocess.CalledProcessError:
-            print("{}{}[!] Cannot touch {} script{}".format(
+            self.qprint("{}{}[!] Cannot touch {} script{}".format(
                 color.BOLD, color.FAIL, self.__initscript, color.ENDC))
 
     # ----------
@@ -298,7 +302,7 @@ class LinuxInstaller:
             color.BOLD, color.WARNING,
             "Would you like to create a syslink named", color.UNDERLINE,
             __name, color.ENDC, color.BOLD, color.WARNING,
-            color.ENDC)).lower()
+            color.ENDC)).lower() if not self.__args.yes else 'y'
         # ----------
         #  Return option
         # ---------------
@@ -323,7 +327,7 @@ class LinuxInstaller:
         #  Handle exception
         # ---------------
         try:
-            print("{}{}[*] Creating a syslink...{}".format(
+            self.qprint("{}{}[*] Creating a syslink...{}".format(
                 color.BOLD, color.OKBLUE, color.ENDC))
             # ----------
             #  Create Syslink
@@ -331,5 +335,14 @@ class LinuxInstaller:
             with open(self.__info.get_devnull(), "w") as FNULL:
                 subprocess.check_output(shsplit(cmd), stderr=FNULL)
         except subprocess.CalledProcessError:
-            print("{}{}[!] Cannot create a syslink{}".format(
+            self.qprint("{}{}[!] Cannot create a syslink{}".format(
                 color.BOLD, color.FAIL, color.ENDC))
+
+
+# ============================================= #
+#  ------------ Better Functions -------------  #
+# ============================================= #
+
+    def qprint(self, __msg):
+        if not self.__args.quiet:
+            print(__msg)

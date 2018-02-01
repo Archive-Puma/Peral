@@ -36,7 +36,8 @@ class LinuxUninstaller:
     # ----------
     #  Init Function
     # ----------------
-    def __init__(self, __database, __installation_folder, __info):
+    def __init__(self, __database, __installation_folder, __info, __args):
+        self.__args = __args
         self.__info = __info
         self.__database = __database
         self.__syslink_folder = "/usr/bin"
@@ -57,7 +58,6 @@ class LinuxUninstaller:
             self.remove_scripts(__repository['uninstall'][0]['Linux'])
             self.remove_repository(__repository['name'])
 
-
 # ============================================= #
 #  ------- Complex Uninstall Functions -------  #
 # ============================================= #
@@ -70,21 +70,23 @@ class LinuxUninstaller:
         # ----------
         #  Return option
         # ---------------
-        return input(
+        option = input(
             "{}{}[?] Would you like to uninstall {} repository? [y/N]: {}".
-            format(color.BOLD, color.FAIL, __name, color.ENDC)).lower() == 'y'
+            format(color.BOLD, color.FAIL, __name,
+                   color.ENDC)).lower() == 'y' if not self.__args.yes else 'y'
+        return option
 
     # ----------
     #  Remove Script Function
     # ---------------
     def remove_scripts(self, __scripts):
-        print("{}{}[*] Running uninstaller scripts...{}".format(
+        self.qprint("{}{}[*] Running uninstaller scripts...{}".format(
             color.BOLD, color.OKBLUE, color.ENDC))
         for cmd in __scripts:
             try:
                 subprocess.check_output(shsplit(cmd))
             except subprocess.CalledProcessError:
-                print("{}[!] Error running: {}{}{}".format(
+                self.qprint("{}[!] Error running: {}{}{}".format(
                     color.FAIL, color.WARNING, cmd, color.ENDC))
 
     # ----------
@@ -107,19 +109,28 @@ class LinuxUninstaller:
         #  Remove Syslink
         # ---------------
         try:
-            print("{}{}[*] Removing syslink...{}".format(
+            self.qprint("{}{}[*] Removing syslink...{}".format(
                 color.BOLD, color.OKBLUE, color.ENDC))
             subprocess.check_output(shsplit(rm_syslink))
         except subprocess.CalledProcessError:
-            print("{}{}[*] Cannot remove {} syslink{}".format(
+            self.qprint("{}{}[*] Cannot remove {} syslink{}".format(
                 color.BOLD, color.FAIL, syslink_location, color.ENDC))
         # ----------
         #  Remove Repository
         # ---------------
         try:
-            print("{}{}[*] Removing repository...{}".format(
+            self.qprint("{}{}[*] Removing repository...{}".format(
                 color.BOLD, color.OKBLUE, color.ENDC))
             subprocess.check_output(shsplit(rm_repo))
         except subprocess.CalledProcessError:
-            print("{}{}[*] Cannot remove {} repository{}".format(
+            self.qprint("{}{}[*] Cannot remove {} repository{}".format(
                 color.BOLD, color.FAIL, repository_location, color.ENDC))
+
+
+# ============================================= #
+#  ------------ Better Functions -------------  #
+# ============================================= #
+
+    def qprint(self, __msg):
+        if not self.__args.quiet:
+            print(__msg)

@@ -93,7 +93,7 @@
       "author": "CosasDePuma",
       "description": "Personal Telegram Hacking Bot",
       "language": [ "python2" ],
-      "main-script": "bobo.py",
+      "main-script": "initperal.sh",
       "version": "2.8a",
       "commit": "78237de",
       "install": [
@@ -104,7 +104,10 @@
             "OUTPUT sed -i 's/000000000:AAAaaaaaa0AaAAaaaA0aaAAAaAaaAaaAAA/<OUTPUT>/g' bobo.cfg",
             "INPUT Enter your Telegram UserID Token: ",
             "OUTPUT sed -i 's/000000000/<OUTPUT>/g' bobo.cfg",
-            "chmod +x bobo.py"
+            "INIT #! /bin/bash",
+            "INIT pushd <PWD> > /dev/null",
+            "INIT python bobo.py $@",
+            "INIT popd > /dev/null"
           ]
         }
       ],

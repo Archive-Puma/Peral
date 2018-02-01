@@ -77,13 +77,13 @@ args = parser.parse_args()
 #  ------------------ Main -------------------  #
 # ============================================= #
 class Main:
-    database_name = "octopus_db.json"
 
     # ----------
     #  Initial Functions
     # ----------------
     def __init__(self):
         self.info = Info()
+        self.database_name = "octopus_db.json"
         self.database_path = self.info.get_filepath(self.database_name)
         self.reader = ReadJSON(self.database_path)
         self.database = self.reader.read()
@@ -106,14 +106,14 @@ class Main:
             if args.cmd == "install":
                 from core.install.linux import LinuxInstaller
                 self.installer = LinuxInstaller(
-                    self.database, self.installation_path, self.info)
+                    self.database, self.installation_path, self.info, args)
             # ----------
             #  Configure uninstaller
             # ----------------
             elif args.cmd == "uninstall":
                 from core.uninstall.linux import LinuxUninstaller
                 self.installer = LinuxUninstaller(
-                    self.database, self.installation_path, self.info)
+                    self.database, self.installation_path, self.info, args)
 
     # ----------
     #  Search Function
