@@ -188,7 +188,7 @@ if __name__ == '__main__':
                         # ----------------
                         print(
                             "{}[!] Repository {} not found in the DB{}".format(
-                                color.FAIL, __reponame, color.ENDC))
+                                color.FAIL, args.repository, color.ENDC))
     # ----------
     #  Custom exceptions
     # ----------------

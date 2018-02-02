@@ -1,548 +1,493 @@
 {
-  "authors": [
-    {
-      "id": 0,
-      "name": "CosasDePuma",
-      "repos": [ 0 ]
-    },
-    {
-      "id": 1,
-      "name": "SqlmapProject",
-      "repos": [ 2 ]
-    },
-    {
-      "id": 2,
-      "name": "D4Vinci",
-      "repos": [ 1, 5 ]
-    },
-    {
-      "id": 3,
-      "name": "Screetsec",
-      "repos": [ 3 ]
-    },
-    {
-      "id": 4,
-      "name": "dxa4481",
-      "repos": [ 4 ]
-    },
-    {
-      "id": 5,
-      "name": "Speed47",
-      "repos": [ 6 ]
-    },
-    {
-      "id": 6,
-      "name": "Boxug",
-      "repos": [ 7 ]
-    },
-    {
-      "id": 7,
-      "name": "ToolsWatch",
-      "repos": [ 8 ]
-    },
-    {
-      "id": 8,
-      "name": "Sh1n0g1",
-      "repos": [ 9 ]
-    },
-    {
-      "id": 9,
-      "name": "Leviathan-Framework",
-      "repos": [ 10 ]
-    },
-    {
-      "id": 10,
-      "name": "Hugsy",
-      "repos": [ 11 ]
-    },
-    {
-      "id": 11,
-      "name": "CommixProject",
-      "repos": [ 12 ]
-    },
-    {
-      "id": 12,
-      "name": "Neoneggplant",
-      "repos": [ 13 ]
-    },
-    {
-      "id": 13,
-      "name": "Reyammer",
-      "repos": [ 15 ]
-    },
-    {
-      "id": 14,
-      "name": "Zardus",
-      "repos": [ 14 ]
-    },
-    {
-      "id": 15,
-      "name": "Epsylon",
-      "repos": [ 16 ]
-    },
-    {
-      "id": 16,
-      "name": "Manisso",
-      "repos": [ 17, 18 ]
-    }
-  ],
-  "repos": [
-    {
-      "id": 0,
-      "name": "Bobobot",
-      "author": "CosasDePuma",
-      "description": "Personal Telegram Hacking Bot",
-      "language": [ "python2" ],
-      "main-script": "initperal.sh",
-      "version": "2.8a",
-      "commit": "78237de",
-      "install": [
-        {
-          "Linux": [
-            "pip install -r requirements.txt",
-            "INPUT Enter your Telegram Botmaster Token: ",
-            "OUTPUT sed -i 's/000000000:AAAaaaaaa0AaAAaaaA0aaAAAaAaaAaaAAA/<OUTPUT>/g' bobo.cfg",
-            "INPUT Enter your Telegram UserID Token: ",
-            "OUTPUT sed -i 's/000000000/<OUTPUT>/g' bobo.cfg",
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python bobo.py $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "name": "One-Lin3r",
-      "author": "D4Vinci",
-      "description": "Gives you one-liners that aids in penetration testing operations",
-      "language": [ "python3", "python2" ],
-      "main-script": "initperal.sh",
-      "version": "1.0",
-      "commit": "655b165",
-      "install": [
-        {
-          "Linux": [
-            "chmod 755 -R ../One-Lin3r/",
-            "apt-get install --force-yes --yes libncurses5-dev",
-            "pip install -r requirements.txt",
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python One_Lin3r.py $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "SQLMap",
-      "author": "SqlmapProject",
-      "description": "Automatic SQL injection and database takeover tool http://sqlmap.org",
-      "language": [ "python2" ],
-      "main-script": "sqlmap.py",
-      "version": "1.2.1.14",
-      "commit": "",
-      "install": [
-        {
-          "Linux": [ ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Vegile",
-      "author": "Screetsec",
-      "description": "This tool will setting up your backdoor/rootkits when backdoor already setup it will be hidden your spesisifc process,unlimited your session in metasploit and transparent. Even when it killed, it will re-run again. There always be a procces which while run another process,So we can assume that this procces is unstopable like a Ghost in The Shell",
-      "language": [ "bash" ],
-      "main-script": "Vegile",
-      "version": "Unknown",
-      "commit": "236fb75",
-      "install": [
-        {
-          "Linux": [
-            "chmod +x Vegile"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "TruffleHog",
-      "author": "dxa4481",
-      "description": "Searches through git repositories for high entropy strings and secrets, digging deep into commit history",
-      "language": [ "python" ],
-      "main-script": "",
-      "version": "Unknown",
-      "commit": "461953f",
-      "install": [
-        {
-          "Linux": [
-            "NOSYSLINK",
-            "pip install truffleHog"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ "pip uninstall -y truffleHog" ]
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "Cr3dOv3r",
-      "author": "D4Vinci",
-      "description": "Know the dangers of credential reuse attacks.",
-      "language": [ "python3", "python2" ],
-      "main-script": "initperal.sh",
-      "version": "0.3.1",
-      "commit": "99c6d0c",
-      "install": [
-        {
-          "Linux": [
-            "chmod 755 -R ../",
-            "pip install -r requirements.txt",
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python Cr3d0v3r.py $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "name": "Spectre-Meltdown-Checker",
-      "author": "Speed47",
-      "description": "Spectre & Meltdown vulnerability/mitigation checker for Linux",
-      "language": [ "bash" ],
-      "main-script": "spectre-meltdown-checker.sh",
-      "version": "Unknown",
-      "commit": "7404929",
-      "install": [
-        {
-          "Linux": [ ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "name": "Trape",
-      "author": "Boxug",
-      "description": "People tracker on the Internet: Learn to track the world, to avoid being traced.",
-      "language": [ "python" ],
-      "main-script": "trape.py",
-      "version": "1.0.0",
-      "commit": "2dd2aa0",
-      "install": [
-        {
-          "Linux": [
-            "pip install -r requirements.txt",
-            "chmod +x trape.py"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "name": "Blackhat-Arsenal-Tools",
-      "author": "ToolsWatch",
-      "description": "Official Black Hat Arsenal Security Tools Repository https://www.toolswatch.org/category/arsenal/",
-      "language": [ "markdown" ],
-      "main-script": "",
-      "version": "Unknown",
-      "commit": "6f74b62",
-      "install": [
-        {
-          "Linux": [
-            "NOSYSLINK"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "name": "ShinoBOT",
-      "author": "Sh1n0g1",
-      "description": "RAT/Botnet Simulator for pentest/education http://shinobot.com",
-      "language": [ ],
-      "main-script": "",
-      "version": "3.1.0.0",
-      "commit": "d535ccc",
-      "install": [
-        {
-          "Linux": [
-            "NOSYSLINK"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "name": "Leviathan",
-      "author": "Leviathan-Framework",
-      "description": "Wide range mass audit toolkit",
-      "language": [ "python2" ],
-      "main-script": "leviathan.py",
-      "version": "0.1.2",
-      "commit": "7b48188",
-      "install": [
-        {
-          "Linux": [
-            "bash scripts/debian_install.sh"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [
-            "rm -f /usr/bin/masscan"
-          ]
-        }
-      ]
-    },
-    {
-      "id": 11,
-      "name": "GEF",
-      "author": "Hugsy",
-      "description": "Multi-Architecture GDB Enhanced Features for exploit devs & reversers http://gef.rtfd.io",
-      "language": [ "python" ],
-      "main-script": "",
-      "version": "Unknown",
-      "commit": "fa237e2",
-      "install": [
-        {
-          "Linux": [
-            "NOSYSLINK",
-            "wget -q -O <HOME>/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py",
-            "mv <HOME>/.gdbinit <HOME>/.gdbinit.old",
-            "echo \"source ~/.gdbinit-gef.py\" > ~/.gdbinit"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [
-            "rm -f <HOME>/.gdbinit-gef.py <HOME>/.gdbinit",
-            "mv <HOME>/.gdbinit.old <HOME>/.gdbinit"
-          ]
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "name": "Commix",
-      "author": "CommixProject",
-      "description": "Automated All-in-One OS command injection and exploitation tool. http://commixproject.com",
-      "language": [ "python2" ],
-      "main-script": "commix.py",
-      "version": "Unknown",
-      "commit": "386d647",
-      "install": [
-        {
-          "Linux": [
-            "chmod +x commix.py"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 13,
-      "name": "EggShell",
-      "author": "Neoneggplant",
-      "description": "iOS/macOS/Linux Remote Administration Tool",
-      "language": [ "python2" ],
-      "main-script": "initperal.sh",
-      "version": "3.0.0",
-      "commit": "ca8b1b4",
-      "install": [
-        {
-          "Linux": [
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python eggshell.py $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 14,
-      "name": "CTF-Tools",
-      "author": "Zardus",
-      "description": "Some setup scripts for security research tools.",
-      "language": [ "python2" ],
-      "main-script": "bin/manage-tools",
-      "version": "Unknown",
-      "commit": "f2431a0",
-      "install": [
-        {
-          "Linux": [
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 15,
-      "name": "ShellNoob",
-      "author": "Reyammer",
-      "description": "A shellcode writing toolkit",
-      "language": [ "python2" ],
-      "main-script": "shellnoob.py",
-      "version": "2.0",
-      "commit": "c923d5e",
-      "install": [
-        {
-          "Linux": [
-            "chmod +x shellnoob.py"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 16,
-      "name": "UFONet",
-      "author": "Epsylon",
-      "description": "UFONet abuses OSI Layer 7-HTTP to create/manage 'zombies' and to conduct different attacks using; GET/POST, multithreading, proxies, origin spoofing methods, cache evasion techniques, etc. http://ufonet.03c8.net",
-      "language": [ "python" ],
-      "main-script": "initperal.sh",
-      "version": "0.9",
-      "commit": "1c88898",
-      "install": [
-        {
-          "Linux": [
-            "apt-get install -y python-pycurl",
-            "apt-get install -y python-geoip",
-            "apt-get install -y python-whois",
-            "apt-get install -y python-crypto",
-            "apt-get install -y python-requests",
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python ufonet $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 17,
-      "name": "Crips",
-      "author": "Manisso",
-      "description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
-      "language": [ "python2" ],
-      "main-script": "initperal.sh",
-      "version": "Unknown",
-      "commit": "8ec6ef0",
-      "install": [
-        {
-          "Linux": [
-            "INIT #! /bin/bash",
-            "INIT python <PWD>/crips.py $@"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    },
-    {
-      "id": 18,
-      "name": "FSociety",
-      "author": "Manisso",
-      "description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
-      "language": [ "python2" ],
-      "main-script": "initperal.sh",
-      "version": "Unknown",
-      "commit": "1623ef3",
-      "install": [
-        {
-          "Linux": [
-            "INIT #! /bin/bash",
-            "INIT pushd <PWD> > /dev/null",
-            "INIT python fsociety.py $@",
-            "INIT popd > /dev/null"
-          ]
-        }
-      ],
-      "uninstall": [
-        {
-          "Linux": [ ]
-        }
-      ]
-    }
-  ]
+	"authors": [{
+			"id": 0,
+			"name": "CosasDePuma",
+			"repos": [0]
+		},
+		{
+			"id": 1,
+			"name": "SqlmapProject",
+			"repos": [2]
+		},
+		{
+			"id": 2,
+			"name": "D4Vinci",
+			"repos": [1, 5]
+		},
+		{
+			"id": 3,
+			"name": "Screetsec",
+			"repos": [3]
+		},
+		{
+			"id": 4,
+			"name": "dxa4481",
+			"repos": [4]
+		},
+		{
+			"id": 5,
+			"name": "Speed47",
+			"repos": [6]
+		},
+		{
+			"id": 6,
+			"name": "Boxug",
+			"repos": [7]
+		},
+		{
+			"id": 7,
+			"name": "ToolsWatch",
+			"repos": [8]
+		},
+		{
+			"id": 8,
+			"name": "Sh1n0g1",
+			"repos": [9]
+		},
+		{
+			"id": 9,
+			"name": "Leviathan-Framework",
+			"repos": [10]
+		},
+		{
+			"id": 10,
+			"name": "Hugsy",
+			"repos": [11]
+		},
+		{
+			"id": 11,
+			"name": "CommixProject",
+			"repos": [12]
+		},
+		{
+			"id": 12,
+			"name": "Neoneggplant",
+			"repos": [13]
+		},
+		{
+			"id": 13,
+			"name": "Reyammer",
+			"repos": [15]
+		},
+		{
+			"id": 14,
+			"name": "Zardus",
+			"repos": [14]
+		},
+		{
+			"id": 15,
+			"name": "Epsylon",
+			"repos": [16]
+		},
+		{
+			"id": 16,
+			"name": "Manisso",
+			"repos": [17, 18]
+		},
+		{
+			"id": 17,
+			"name": "NullArray",
+			"repos": [19]
+		}
+	],
+	"repos": [{
+			"id": 0,
+			"name": "Bobobot",
+			"author": "CosasDePuma",
+			"description": "Personal Telegram Hacking Bot",
+			"language": ["python2"],
+			"main-script": "initperal.sh",
+			"version": "2.8a",
+			"commit": "78237de",
+			"install": [{
+				"Linux": [
+					"pip install -r requirements.txt",
+					"INPUT Enter your Telegram Botmaster Token: ",
+					"OUTPUT sed -i 's/000000000:AAAaaaaaa0AaAAaaaA0aaAAAaAaaAaaAAA/<OUTPUT>/g' bobo.cfg",
+					"INPUT Enter your Telegram UserID Token: ",
+					"OUTPUT sed -i 's/000000000/<OUTPUT>/g' bobo.cfg",
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python bobo.py $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 1,
+			"name": "One-Lin3r",
+			"author": "D4Vinci",
+			"description": "Gives you one-liners that aids in penetration testing operations",
+			"language": ["python3", "python2"],
+			"main-script": "initperal.sh",
+			"version": "1.0",
+			"commit": "655b165",
+			"install": [{
+				"Linux": [
+					"chmod 755 -R ../One-Lin3r/",
+					"apt-get install --force-yes --yes libncurses5-dev",
+					"pip install -r requirements.txt",
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python One_Lin3r.py $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 2,
+			"name": "SQLMap",
+			"author": "SqlmapProject",
+			"description": "Automatic SQL injection and database takeover tool http://sqlmap.org",
+			"language": ["python2"],
+			"main-script": "sqlmap.py",
+			"version": "1.2.1.14",
+			"commit": "",
+			"install": [{
+				"Linux": []
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 3,
+			"name": "Vegile",
+			"author": "Screetsec",
+			"description": "This tool will setting up your backdoor/rootkits when backdoor already setup it will be hidden your spesisifc process,unlimited your session in metasploit and transparent. Even when it killed, it will re-run again. There always be a procces which while run another process,So we can assume that this procces is unstopable like a Ghost in The Shell",
+			"language": ["bash"],
+			"main-script": "Vegile",
+			"version": "Unknown",
+			"commit": "236fb75",
+			"install": [{
+				"Linux": [
+					"chmod +x Vegile"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 4,
+			"name": "TruffleHog",
+			"author": "dxa4481",
+			"description": "Searches through git repositories for high entropy strings and secrets, digging deep into commit history",
+			"language": ["python"],
+			"main-script": "",
+			"version": "Unknown",
+			"commit": "461953f",
+			"install": [{
+				"Linux": [
+					"NOSYSLINK",
+					"pip install truffleHog"
+				]
+			}],
+			"uninstall": [{
+				"Linux": ["pip uninstall -y truffleHog"]
+			}]
+		},
+		{
+			"id": 5,
+			"name": "Cr3dOv3r",
+			"author": "D4Vinci",
+			"description": "Know the dangers of credential reuse attacks.",
+			"language": ["python3", "python2"],
+			"main-script": "initperal.sh",
+			"version": "0.3.1",
+			"commit": "99c6d0c",
+			"install": [{
+				"Linux": [
+					"chmod 755 -R ../",
+					"pip install -r requirements.txt",
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python Cr3d0v3r.py $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 6,
+			"name": "Spectre-Meltdown-Checker",
+			"author": "Speed47",
+			"description": "Spectre & Meltdown vulnerability/mitigation checker for Linux",
+			"language": ["bash"],
+			"main-script": "spectre-meltdown-checker.sh",
+			"version": "Unknown",
+			"commit": "7404929",
+			"install": [{
+				"Linux": []
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 7,
+			"name": "Trape",
+			"author": "Boxug",
+			"description": "People tracker on the Internet: Learn to track the world, to avoid being traced.",
+			"language": ["python"],
+			"main-script": "trape.py",
+			"version": "1.0.0",
+			"commit": "2dd2aa0",
+			"install": [{
+				"Linux": [
+					"pip install -r requirements.txt",
+					"chmod +x trape.py"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 8,
+			"name": "Blackhat-Arsenal-Tools",
+			"author": "ToolsWatch",
+			"description": "Official Black Hat Arsenal Security Tools Repository https://www.toolswatch.org/category/arsenal/",
+			"language": ["markdown"],
+			"main-script": "",
+			"version": "Unknown",
+			"commit": "6f74b62",
+			"install": [{
+				"Linux": [
+					"NOSYSLINK"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 9,
+			"name": "ShinoBOT",
+			"author": "Sh1n0g1",
+			"description": "RAT/Botnet Simulator for pentest/education http://shinobot.com",
+			"language": [],
+			"main-script": "",
+			"version": "3.1.0.0",
+			"commit": "d535ccc",
+			"install": [{
+				"Linux": [
+					"NOSYSLINK"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 10,
+			"name": "Leviathan",
+			"author": "Leviathan-Framework",
+			"description": "Wide range mass audit toolkit",
+			"language": ["python2"],
+			"main-script": "leviathan.py",
+			"version": "0.1.2",
+			"commit": "7b48188",
+			"install": [{
+				"Linux": [
+					"bash scripts/debian_install.sh"
+				]
+			}],
+			"uninstall": [{
+				"Linux": [
+					"rm -f /usr/bin/masscan"
+				]
+			}]
+		},
+		{
+			"id": 11,
+			"name": "GEF",
+			"author": "Hugsy",
+			"description": "Multi-Architecture GDB Enhanced Features for exploit devs & reversers http://gef.rtfd.io",
+			"language": ["python"],
+			"main-script": "",
+			"version": "Unknown",
+			"commit": "fa237e2",
+			"install": [{
+				"Linux": [
+					"NOSYSLINK",
+					"wget -q -O <HOME>/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py",
+					"mv <HOME>/.gdbinit <HOME>/.gdbinit.old",
+					"echo \"source ~/.gdbinit-gef.py\" > ~/.gdbinit"
+				]
+			}],
+			"uninstall": [{
+				"Linux": [
+					"rm -f <HOME>/.gdbinit-gef.py <HOME>/.gdbinit",
+					"mv <HOME>/.gdbinit.old <HOME>/.gdbinit"
+				]
+			}]
+		},
+		{
+			"id": 12,
+			"name": "Commix",
+			"author": "CommixProject",
+			"description": "Automated All-in-One OS command injection and exploitation tool. http://commixproject.com",
+			"language": ["python2"],
+			"main-script": "commix.py",
+			"version": "Unknown",
+			"commit": "386d647",
+			"install": [{
+				"Linux": [
+					"chmod +x commix.py"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 13,
+			"name": "EggShell",
+			"author": "Neoneggplant",
+			"description": "iOS/macOS/Linux Remote Administration Tool",
+			"language": ["python2"],
+			"main-script": "initperal.sh",
+			"version": "3.0.0",
+			"commit": "ca8b1b4",
+			"install": [{
+				"Linux": [
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python eggshell.py $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 14,
+			"name": "CTF-Tools",
+			"author": "Zardus",
+			"description": "Some setup scripts for security research tools.",
+			"language": ["python2"],
+			"main-script": "bin/manage-tools",
+			"version": "Unknown",
+			"commit": "f2431a0",
+			"install": [{
+				"Linux": []
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 15,
+			"name": "ShellNoob",
+			"author": "Reyammer",
+			"description": "A shellcode writing toolkit",
+			"language": ["python2"],
+			"main-script": "shellnoob.py",
+			"version": "2.0",
+			"commit": "c923d5e",
+			"install": [{
+				"Linux": [
+					"chmod +x shellnoob.py"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 16,
+			"name": "UFONet",
+			"author": "Epsylon",
+			"description": "UFONet abuses OSI Layer 7-HTTP to create/manage 'zombies' and to conduct different attacks using; GET/POST, multithreading, proxies, origin spoofing methods, cache evasion techniques, etc. http://ufonet.03c8.net",
+			"language": ["python"],
+			"main-script": "initperal.sh",
+			"version": "0.9",
+			"commit": "1c88898",
+			"install": [{
+				"Linux": [
+					"apt-get install -y python-pycurl",
+					"apt-get install -y python-geoip",
+					"apt-get install -y python-whois",
+					"apt-get install -y python-crypto",
+					"apt-get install -y python-requests",
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python ufonet $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 17,
+			"name": "Crips",
+			"author": "Manisso",
+			"description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
+			"language": ["python2"],
+			"main-script": "initperal.sh",
+			"version": "Unknown",
+			"commit": "8ec6ef0",
+			"install": [{
+				"Linux": [
+					"INIT #! /bin/bash",
+					"INIT python <PWD>/crips.py $@"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 18,
+			"name": "FSociety",
+			"author": "Manisso",
+			"description": "IP Tools To quickly get information about IP Address's, Web Pages and DNS records.",
+			"language": ["python2"],
+			"main-script": "initperal.sh",
+			"version": "Unknown",
+			"commit": "1623ef3",
+			"install": [{
+				"Linux": [
+					"INIT #! /bin/bash",
+					"INIT pushd <PWD> > /dev/null",
+					"INIT python fsociety.py $@",
+					"INIT popd > /dev/null"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		},
+		{
+			"id": 19,
+			"name": "AutoSploit",
+			"author": "NullArray",
+			"description": "Automated Mass Exploiter",
+			"language": ["python"],
+			"main-script": "autosploit.py",
+			"version": "Unknown",
+			"commit": "e03e7f2",
+			"install": [{
+				"Linux": [
+					"pip install shodan blessings",
+					"chmod +x autosploit.py"
+				]
+			}],
+			"uninstall": [{
+				"Linux": []
+			}]
+		}
+	]
 }
