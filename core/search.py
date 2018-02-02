@@ -31,4 +31,27 @@ class Searcher:
         self.__database = __database
 
     def search(self, __pieceofname):
-        pass
+        print("")
+        print("{}{}|----------------------------------------------".format(
+            color.BOLD, color.OKBLUE))
+        for repository in self.__database['repos']:
+            if __pieceofname in repository['name']:
+                print("{}|{} Name: {}{}".format(color.OKBLUE, color.OKGREEN,
+                                                color.WARNING,
+                                                repository['name']))
+                print("{}|{} Author: {}{}".format(color.OKBLUE, color.OKGREEN,
+                                                  color.WARNING,
+                                                  repository['author']))
+                print("{}|{} Description: {}{}".format(
+                    color.OKBLUE, color.OKGREEN, color.WARNING,
+                    repository['description']))
+                print("{}|{} Version: {}{}".format(color.OKBLUE, color.OKGREEN,
+                                                   color.WARNING,
+                                                   repository['version']))
+                print("{}|{} Commit tested: {}{}".format(
+                    color.OKBLUE, color.OKGREEN, color.WARNING,
+                    repository['commit']))
+                print("{}{}|----------------------------------------------{}"
+                      .format(color.OKBLUE, color.BOLD, color.OKBLUE,
+                              color.ENDC))
+        print("")

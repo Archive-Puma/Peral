@@ -116,10 +116,12 @@ class Main:
                     self.database, self.installation_path, self.info, args)
 
     def configure_searcher(self):
-        pass
+        from core.search import Searcher
+        self.searcher = Searcher(self.info, args, self.database)
     # ----------
     #  Search Function
     # ----------------
+
     def search(self, __repository):
         # ----------
         #  Variables
@@ -150,7 +152,8 @@ if __name__ == '__main__':
         #  Search repositories
         # ----------------
         if args.cmd == "search":
-            pass
+            main.configure_searcher()
+            main.searcher.search(args.repository)
         else:
             # ----------
             #  Check Privileges
