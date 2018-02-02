@@ -195,3 +195,14 @@ if __name__ == '__main__':
     except (IOError, SystemError, ImportError) as custom_exception:
         print("{}{}[!] {}{}".format(color.BOLD, color.FAIL,
                                     custom_exception[0], color.ENDC))
+    except KeyboardInterrupt:
+        print("{}{}[!] Keyboard Interrupt!{}".format(color.BOLD, color.FAIL, color.ENDC))
+
+# ============================================= #
+#  ---------------- To Do(s) -----------------  #
+# ============================================= #
+
+# MD5 Security Check
+# Version control
+# Travis CI and other continuos development
+# Updater
