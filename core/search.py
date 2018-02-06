@@ -35,7 +35,7 @@ class Searcher:
         print("{}{}|----------------------------------------------".format(
             color.BOLD, color.OKBLUE))
         for repository in self.__database['repos']:
-            if __pieceofname in repository['name']:
+            if __pieceofname.lower() in repository['name'].lower():
                 print("{}|{} Name: {}{}".format(color.OKBLUE, color.OKGREEN,
                                                 color.WARNING,
                                                 repository['name']))
