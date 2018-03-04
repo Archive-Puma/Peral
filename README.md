@@ -75,7 +75,7 @@ with
 python2 ./main.py $@
 ```
 
-###### Actualmente, Peral sólo funciona correctamente en Sistemas Operativos Linux basados en Debian.
+###### Currently, Peral only works correctly in Linux Operating Systems based on Debian.
 
  
 
